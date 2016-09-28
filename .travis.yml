@@ -1,0 +1,12 @@
+language: clojure
+jdk: oraclejdk8
+lein: 2.6.1
+
+before_script:
+  - cp test/travis_test_key ~/.ssh/travis_test_key
+  - chmod 600 ~/.ssh/travis_test_key
+  - echo "Host git.skygeario.com" >> ~/.ssh/config
+  - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+  - echo "  IdentityFile ~/.ssh/travis_test_key" >> ~/.ssh/config
+script:
+  - test/test.sh

@@ -4,4 +4,11 @@
   :license {:name "MIT"
             :url "https://opensource.org/licenses/MIT"}
   :eval-in-leiningen true
-  :dependencies [[me.raynes/fs "1.4.6"]])
+  :dependencies [[me.raynes/fs "1.4.6"]]
+
+  :skygear {:test {:git-url "ssh://git@git.skygeario.com/leinskygeartest.git"
+                   :ssh-key "test/travis_test_key"
+                   :source-dir "test/code"
+                   :static-dir "test/static"}}
+
+  )

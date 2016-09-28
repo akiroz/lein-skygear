@@ -1,20 +1,23 @@
 (ns leiningen.skygear-deploy
-  (:require [clojure.java.io :as io]
+  (:require [clojure.string :refer [join]]
+            [clojure.java.io :as io]
             [clojure.java.shell :refer [sh]]
             [me.raynes.fs :as fs]))
 
 
-(defn- exec [opts & cmd]
-  (->> (mapcat vec opts)
-       (concat cmd)
-       (apply sh)
-       ((fn [{:keys [out err]}]
-          (str out "\n" err)))
-       println))
+(defn- exec [print? opts & cmd]
+  (let [{:keys [out err exit]} (->> (mapcat vec opts)
+                                    (concat cmd)
+                                    (apply sh))]
+    (when print?
+      (print (str out err))
+      (flush))
+    (when-not (= exit 0)
+      (throw (Exception. (str "Command '" (join " " cmd)
+                              "' exited with code: " exit))))))
 
 
 (defn- setup-repo [repo source-dir static-dir]
-  (println "Moving files into place...")
   (when (fs/exists? repo)
     (println "Deleting existing repo...")
     (fs/delete-dir repo))
@@ -34,20 +37,21 @@
 
 
 (defn- initialize-git [repo git-url]
-  (println "Initializing git repo...")
-  (let [git (partial exec {:dir repo} "git")]
+  (let [git (partial exec true {:dir repo} "git")
+        git-s (partial exec false {:dir repo} "git")]
     (git "init")
-    (git "remote" "add" "skygear" git-url)
-    (git "add" ".")
+    (git-s "remote" "add" "skygear" git-url)
+    (git-s "add" ".")
     (git "commit" "-m" "-")))
 
 
 (defn- deploy-code [repo ssh-key]
   (println "Deploying to skygear cloud...")
-  (let [env (if ssh-key
-              {"GIT_SSH_COMMAND" (str "ssh -F /dev/null -i " ssh-key)}
-              {})
-        git (partial exec {:dir repo :env env} "git")]
+  (let [ssh "ssh"
+        env (if ssh-key
+              {"GIT_SSH_COMMAND" (str ssh " -i " ssh-key)}
+              {"GIT_SSH_COMMAND" ssh})
+        git (partial exec true {:dir repo :env env} "git")]
     (git "push" "skygear" "master" "--force")))
 
 

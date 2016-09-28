@@ -1,14 +1,13 @@
 # lein-skygear
 
+[![Clojars Project](https://img.shields.io/clojars/v/lein-skygear.svg)](https://clojars.org/lein-skygear)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/akiroz/lein-skygear/master/LICENSE)
+[![Build Status](https://travis-ci.org/akiroz/lein-skygear.svg?branch=master)](https://travis-ci.org/akiroz/lein-skygear)
+
 A leiningen plugin that automates cloud code deployment to skygear cloud
 
-## Install
-
-Add the following dependency to the `:plugins` vector of your `project.clj`.
-
-[![Clojars Project](https://img.shields.io/clojars/v/lein-skygear.svg)](https://clojars.org/lein-skygear)
-
 Note: this plugin relies on `ssh` and `git` (>= 2.3.0) on `$PATH`.
+
 
 ## Usage
 
@@ -33,12 +32,9 @@ and accessible from the internet with `<your-app>.skygeario.com/static/`. If `:s
 is not specified, an empty `__init__.py` file will be created for you.
 
 
-Deploy:
+### Deploy:
 
 ```
-$ lein skygear-deploy  # uses :dev by default
-```
-OR:
-```
+$ lein skygear-deploy   # default dev, OR:
 $ lein skygear-deploy release
 ```
