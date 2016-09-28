@@ -8,6 +8,8 @@ A leiningen plugin that automates cloud code deployment to skygear cloud
 
 Note: this plugin relies on `ssh` and `git` (>= 2.3.0) on `$PATH`.
 
+The git version is for ssh identity overriding, you may use an older version if this is not required.
+
 
 ## Usage
 
@@ -37,4 +39,19 @@ is not specified, an empty `__init__.py` file will be created for you.
 ```
 $ lein skygear-deploy   # default dev, OR:
 $ lein skygear-deploy release
+```
+
+### Travis CI:
+
+Since it is not trivial to get `git >= 2.3.0` on the test containers, here's a workaround:
+
+```yaml
+
+before_deploy:
+  - cp path/to/private_key ~/.ssh/my_key
+  - chmod 600 ~/.ssh/my_key
+  - echo "Host *" >> ~/.ssh/config
+  - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
+  - echo "  IdentityFile ~/.ssh/my_key" >> ~/.ssh/config
+
 ```
