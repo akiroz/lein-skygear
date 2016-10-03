@@ -49,7 +49,7 @@
   (println "Deploying to skygear cloud...")
   (let [ssh "ssh"
         env (if ssh-key
-              {"GIT_SSH_COMMAND" (str ssh " -i " ssh-key)}
+              {"GIT_SSH_COMMAND" (str ssh " -i " (fs/absolute ssh-key))}
               {"GIT_SSH_COMMAND" ssh})
         git (partial exec true {:dir repo :env env} "git")]
     (git "push" "skygear" "master" "--force")))
@@ -68,6 +68,6 @@
        (throw (Exception. "Must provide :git-url with either/both :source-dir and :static-dir.")))
      (setup-repo repo source-dir static-dir)
      (initialize-git repo git-url)
-     (deploy-code repo (fs/absolute ssh-key))))
+     (deploy-code repo ssh-key)))
   ([_ _ & _]
    (throw (Exception. "Invalid number of args."))))

@@ -9,8 +9,10 @@ echo "$X" > "test/static/$X.txt"
 echo "Test string: $X"
 
 
-git config --global user.email "travis.ci@leinskygeartest.skygeario.com"
-git config --global user.name "Travis CI"
+if $TRAVIS; then
+  git config --global user.email "travis.ci@leinskygeartest.skygeario.com"
+  git config --global user.name "Travis CI"
+fi
 lein skygear-deploy test
 
 
