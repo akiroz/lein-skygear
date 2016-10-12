@@ -37,8 +37,8 @@ is not specified, an empty `__init__.py` file will be created for you.
 ### Deploy:
 
 ```
-$ lein skygear-deploy   # default dev, OR:
-$ lein skygear-deploy release
+$ lein deploy-skygear   # default dev, OR:
+$ lein deploy-skygear release
 ```
 
 ### Travis CI:

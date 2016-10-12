@@ -1,4 +1,4 @@
-(ns leiningen.skygear-deploy
+(ns leiningen.deploy-skygear
   (:require [clojure.string :refer [join]]
             [clojure.java.io :as io]
             [clojure.java.shell :refer [sh]]
@@ -55,9 +55,9 @@
     (git "push" "skygear" "master" "--force")))
 
 
-(defn skygear-deploy
+(defn deploy-skygear
   ([project]
-   (skygear-deploy project "dev"))
+   (deploy-skygear project "dev"))
   ([project profile-name]
    (let [profile (get-in project [:skygear (keyword profile-name)])
          {:keys [git-url ssh-key source-dir static-dir]} profile

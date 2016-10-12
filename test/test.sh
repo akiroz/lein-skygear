@@ -13,7 +13,7 @@ if $TRAVIS; then
   git config --global user.email "travis.ci@leinskygeartest.skygeario.com"
   git config --global user.name "Travis CI"
 fi
-lein skygear-deploy test
+lein deploy-skygear test
 
 
 echo "Waiting 2 minutes..."
@@ -24,3 +24,7 @@ echo -n "Testing cloud code... "
 
 echo -n "Testing static asset... "
 [[ $(curl -s "leinskygeartest.skygeario.com/static/$X.txt") = $X ]] && echo "OK!" || exit 1
+
+echo "Cleaning up..."
+rm "test/code/my_file.py"
+rm "test/static/$X.txt"
