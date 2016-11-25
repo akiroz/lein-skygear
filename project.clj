@@ -1,4 +1,4 @@
-(defproject lein-skygear "0.1.3"
+(defproject lein-skygear "0.1.4"
   :description "A leiningen plugin that automates cloud code deployment to skygear cloud"
   :url "https://github.com/akiroz/lein-skygear"
   :license {:name "MIT"

@@ -16,8 +16,8 @@ fi
 lein deploy-skygear test
 
 
-echo "Waiting 2 minutes..."
-sleep 120
+echo "Waiting 3 minutes..."
+sleep 180
 
 echo -n "Testing cloud code... "
 [[ $(curl -s "leinskygeartest.skygeario.com/test-string") = $X ]] && echo "OK!" || exit 1

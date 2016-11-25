@@ -28,10 +28,12 @@
   (when static-dir
     (println "Copying static files...")
     (let [public_html (io/file repo "public_html")
-          init-py (io/file repo "__init__.py")]
+          init-py     (io/file repo "__init__.py")
+          index-js    (io/file repo "index.js")]
       (when-not (fs/exists? public_html)
         (fs/mkdirs public_html))
-      (when-not (fs/exists? init-py)
+      (when-not (or (fs/exists? init-py)
+                    (fs/exists? index-js))
         (fs/create init-py))
       (fs/copy-dir-into static-dir public_html))))
 
