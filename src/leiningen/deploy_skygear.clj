@@ -1,5 +1,5 @@
 (ns leiningen.deploy-skygear
-  (:require [clojure.string :refer [join]]
+  (:require [clojure.string :refer [join trim-newline]]
             [clojure.java.io :as io]
             [clojure.java.shell :refer [sh]]
             [me.raynes.fs :as fs]))
@@ -49,7 +49,7 @@
 
 (defn- deploy-code [repo ssh-key]
   (println "Deploying to skygear cloud...")
-  (let [ssh "ssh"
+  (let [ssh (trim-newline (:out (sh "which" "ssh")))
         env (if ssh-key
               {"GIT_SSH_COMMAND" (str ssh " -i " (fs/absolute ssh-key))}
               {"GIT_SSH_COMMAND" ssh})
