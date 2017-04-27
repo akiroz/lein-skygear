@@ -6,7 +6,7 @@
   :eval-in-leiningen true
   :dependencies [[me.raynes/fs "1.4.6"]]
 
-  :skygear {:test {:git-url "ssh://lein.skygear/leinskygeartest.git"
+  :skygear {:test {:git-url "ssh://git@git.skygeario.com/leinskygeartest.git"
                    :source-dir "test/code"
                    :static-dir "test/static"}}
 

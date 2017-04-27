@@ -3,12 +3,9 @@ jdk: oraclejdk8
 lein: 2.6.1
 
 before_script:
-  - echo $LEIN_SKYGEAR_KEY | sed "s/\\\\/\n/g" > ~/.ssh/lein.skygear.key
-  - chmod 600 ~/.ssh/lein.skygear.key
-  - echo "Host lein.skygear" >> ~/.ssh/config
-  - echo "  User git" >> ~/.ssh/config
-  - echo "  HostName git.skygeario.com" >> ~/.ssh/config
+  - echo $SKYGEAR_SSH_KEY | sed "s/\\\\/\n/g" > ~/.ssh/id_rsa
+  - chmod 600 ~/.ssh/id_rsa
+  - echo "Host git.skygeario.com" >> ~/.ssh/config
   - echo "  StrictHostKeyChecking no" >> ~/.ssh/config
-  - echo "  IdentityFile ~/.ssh/lein.skygear.key" >> ~/.ssh/config
 script:
   - test/test.sh
